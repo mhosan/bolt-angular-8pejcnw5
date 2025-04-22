@@ -1,9 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { bootstrapApplication } from '@angular/platform-browser';
-import { MapComponent } from './app/map.component';
-import { AuthComponent } from './app/auth/auth.component';
 import { CommonModule } from '@angular/common';
-import { SupabaseService } from './app/services/supabase.service';
+import { MapComponent } from './map.component';
+import { AuthComponent } from './auth/auth.component';
+import { SupabaseService } from './services/supabase.service';
 
 @Component({
   selector: 'app-root',
@@ -64,21 +63,15 @@ import { SupabaseService } from './app/services/supabase.service';
     }
   `]
 })
-export class App {
+export class AppComponent {
   public supabaseService = inject(SupabaseService);
-  constructor( 
-  ) {}
+  constructor() {}
 
   async signOut() {
     try {
       await this.supabaseService.signOut();
-      //this.isMenuOpen = false;
     } catch (error) {
       console.error('Error signing out:', error);
     }
   }
 }
-
-bootstrapApplication(App, {
-  providers: [SupabaseService]
-});
