@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MapComponent } from './map.component';
 import { AuthComponent } from './auth/auth.component';
 import { SupabaseService } from './services/supabase.service';
+declare var bootstrap: any; // Declaración para Bootstrap JS
 
 @Component({
   selector: 'app-root',
@@ -69,6 +70,14 @@ export class AppComponent {
 
   async signOut() {
     try {
+      // Cerrar el menú offcanvas
+      const offcanvasElement = document.getElementById('offcanvasMenu');
+      const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+      if (offcanvas) {
+        offcanvas.hide();
+      }
+      
+      // Cerrar sesión
       await this.supabaseService.signOut();
     } catch (error) {
       console.error('Error signing out:', error);
